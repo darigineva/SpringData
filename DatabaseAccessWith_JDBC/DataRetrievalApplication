@@ -9,12 +9,10 @@ public class DataRetrievalApplication {
         Connection connection = DriverManager.getConnection
                 ("jdbc:mysql://localhost:3306/diablo", "root", "***");
 
-        String query = "SELECT u.`first_name`, u.`last_name`, COUNT(g.`id`) AS duration\n" +
+        String query = "SELECT u.`first_name`, u.`last_name`, COUNT(ug.`game_id`) AS duration\n" +
                 "FROM `users` u\n" +
                 "         LEFT JOIN `users_games` ug ON u.`id` = ug.`user_id`\n" +
-                "         LEFT JOIN `games` g on g.`id` = ug.`game_id`\n" +
-                "GROUP BY u.`id`, u.`user_name`\n" +
-                "HAVING u.`user_name` LIKE ?;";
+                "WHERE u.`user_name` LIKE ?;";
         PreparedStatement prepStatement = connection.prepareStatement(query);
         String userName = scanner.nextLine();
         prepStatement.setString(1, userName);
