@@ -20,5 +20,6 @@ public class AccessingDatabase {
 
             System.out.println(firstName + " " + lastName);
         }
+         connection.close();
     }
 }
