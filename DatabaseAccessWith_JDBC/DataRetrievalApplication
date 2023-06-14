@@ -1,0 +1,36 @@
+package DatabaseAccessWith_JDBC;
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class DataRetrievalApplication {
+    public static void main(String[] args) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        Connection connection = DriverManager.getConnection
+                ("jdbc:mysql://localhost:3306/diablo", "root", "***");
+
+        String query = "SELECT u.`first_name`, u.`last_name`, COUNT(g.`id`) AS duration\n" +
+                "FROM `users` u\n" +
+                "         LEFT JOIN `users_games` ug ON u.`id` = ug.`user_id`\n" +
+                "         LEFT JOIN `games` g on g.`id` = ug.`game_id`\n" +
+                "GROUP BY u.`id`, u.`user_name`\n" +
+                "HAVING u.`user_name` LIKE ?;";
+        PreparedStatement prepStatement = connection.prepareStatement(query);
+        String userName = scanner.nextLine();
+        prepStatement.setString(1, userName);
+        ResultSet resultSet = prepStatement.executeQuery();
+        StringBuilder output = new StringBuilder();
+        if (resultSet.next()) {
+            System.out.println("User: " + userName);
+            output.append(resultSet.getString("first_name"))
+                    .append(" ").append(resultSet.getString("last_name"))
+                    .append(" has played ")
+                    .append(resultSet.getInt("duration"))
+                    .append(" games");
+            System.out.println(output);
+        } else {
+            System.out.println("No such user exists");
+        }
+        connection.close();
+    }
+}
