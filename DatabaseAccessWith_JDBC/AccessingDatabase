@@ -1,0 +1,24 @@
+package DatabaseAccessWith_JDBC;
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class AccessingDatabase {
+    public static void main(String[] args) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+
+        Connection connection = DriverManager.getConnection
+                ("jdbc:mysql://localhost:3306/soft_uni", "root", "stanimirov");
+        Statement statement = connection.createStatement();
+
+        System.out.println("Enter the salary you want to search for:");
+        double salary = Double.parseDouble(scanner.nextLine());
+        ResultSet resultSet = statement.executeQuery("select first_name, last_name from employees where salary > " + salary);
+        while (resultSet.next()) {  /// if returns one result, for returns first n results
+            String firstName = resultSet.getString(1);
+            String lastName = resultSet.getString("last_name");
+
+            System.out.println(firstName + " " + lastName);
+        }
+    }
+}
