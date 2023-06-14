@@ -10,9 +10,10 @@ public class DataRetrievalApplication {
                 ("jdbc:mysql://localhost:3306/diablo", "root", "***");
 
         String query = "SELECT u.`first_name`, u.`last_name`, COUNT(ug.`game_id`) AS duration\n" +
-                "FROM `users` u\n" +
-                "         LEFT JOIN `users_games` ug ON u.`id` = ug.`user_id`\n" +
-                "WHERE u.`user_name` LIKE ?;";
+                " FROM `users` u\n" +
+                "         JOIN `users_games` ug ON u.`id` = ug.`user_id`\n" +
+                " GROUP BY u.id, u.user_name\n" +
+                "HAVING u.`user_name` = ?;";
         PreparedStatement prepStatement = connection.prepareStatement(query);
         String userName = scanner.nextLine();
         prepStatement.setString(1, userName);
