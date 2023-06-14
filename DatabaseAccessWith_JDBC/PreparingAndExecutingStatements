@@ -8,7 +8,7 @@ public class PreparingAndExecutingStatements {
         Scanner scanner = new Scanner(System.in);
 
         Connection connection = DriverManager.getConnection
-                ("jdbc:mysql://localhost:3306/soft_uni", "root", "stanimirov");
+                ("jdbc:mysql://localhost:3306/soft_uni", "root", "password");
         String query = "SELECT first_name, last_name FROM employees\n" +
                 "WHERE salary > ?";
         PreparedStatement prepStatement = connection.prepareStatement(query);
