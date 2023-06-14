@@ -26,10 +26,10 @@ public class DataRetrievalApplication {
                     .append(" ").append(resultSet.getString("last_name"))
                     .append(" has played ")
                     .append(resultSet.getInt("duration"))
-                    .append(" games");
+                    .append(" games.");
             System.out.println(output);
         } else {
-            System.out.println("No such user exists");
+            System.out.println("No such user exists.");
         }
         connection.close();
     }
