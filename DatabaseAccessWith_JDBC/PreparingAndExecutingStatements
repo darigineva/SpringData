@@ -1,0 +1,27 @@
+package DatabaseAccessWith_JDBC;
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class PreparingAndExecutingStatements {
+    public static void main(String[] args) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+
+        Connection connection = DriverManager.getConnection
+                ("jdbc:mysql://localhost:3306/soft_uni", "root", "stanimirov");
+        String query = "SELECT first_name, last_name FROM employees\n" +
+                "WHERE salary > ?";
+        PreparedStatement prepStatement = connection.prepareStatement(query);
+        String salary = scanner.nextLine();
+        prepStatement.setDouble(1, Double.parseDouble(salary));
+        ResultSet resultSet = prepStatement.executeQuery();
+        while (resultSet.next()) {
+            StringBuilder output = new StringBuilder();
+            output.append(resultSet.getString("first_name"))
+                    .append(" ")
+                    .append(resultSet.getString("last_name"));
+            System.out.println(output);
+        }
+        connection.close();
+    }
+}
