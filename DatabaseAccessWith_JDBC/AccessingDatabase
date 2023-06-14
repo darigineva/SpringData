@@ -8,7 +8,7 @@ public class AccessingDatabase {
         Scanner scanner = new Scanner(System.in);
 
         Connection connection = DriverManager.getConnection
-                ("jdbc:mysql://localhost:3306/soft_uni", "root", "stanimirov");
+                ("jdbc:mysql://localhost:3306/soft_uni", "root", "password");
         Statement statement = connection.createStatement();
 
         System.out.println("Enter the salary you want to search for:");
